@@ -7,9 +7,6 @@ from torchstat import stat
 import math
 
 
-# WV3-10000: parameters 13640; loss 0.0003596
-
-
 # --------------------------------Bias BlueConv Block -----------------------------------#
 class addconv(nn.Module):
     def __init__(self, in_channels, out_channels, kernel_size):
@@ -84,38 +81,6 @@ class Res_Block(nn.Module):
         return res
 
 
-# -------------------------------------Dense net----------------------------------#
-# class DCMNet(nn.Module):
-#     def __init__(self, in_planes=32):
-#         super(DCMNet, self).__init__()
-#
-#         # self.in_planes = in_planes #channel?
-#
-#         # self.conv1 = nn.Conv2d(in_channels=in_planes, out_channels=in_planes, kernel_size=3, stride=1, padding=1)
-#         # self.conv2 = nn.Conv2d(in_channels=in_planes, out_channels=in_planes, kernel_size=3, stride=1, padding=1)
-#         # self.conv3 = nn.Conv2d(in_channels=in_planes, out_channels=in_planes, kernel_size=3, stride=1, padding=1)
-#         # self.conv4 = nn.Conv2d(in_channels=in_planes, out_channels=in_planes, kernel_size=1, stride=1, padding=0)
-#         self.conv1 = addconv(in_planes, in_planes, 3)
-#         self.conv2 = addconv(in_planes, in_planes, 3)
-#         self.conv3 = addconv(in_planes, in_planes, 3)
-#         self.conv4 = addconv(in_planes, in_planes, 1)
-#         self.relu = nn.ReLU(inplace=True)
-#
-#     def forward(self, x):
-#         x1 = self.relu(torch.add(self.conv1(x), x))
-#
-#         x2 = self.relu(torch.add(self.conv2(x1), x))
-#         x2 = torch.add(x2, x1)
-#
-#         x3 = self.relu(torch.add(self.conv3(x2), x))
-#         x3 = torch.add(x3, x1)
-#         x3 = torch.add(x3, x2)
-#
-#         dcm_result = self.conv4(x3)
-#
-#         return dcm_result
-
-
 
 # --------------------------------Network---------------------------#
 
@@ -137,16 +102,9 @@ class NET(nn.Module):
             Res_Block(32),
             Res_Block(32),
             Res_Block(32)
-            # Res_Block(32),
-            # Res_Block(32),
-            # Res_Block(32),
-            # Res_Block(32)
+
         #
         )
-        # self.dcm_block = nn.Sequential(
-        #     # DCMNet(),
-        #     DCMNet()
-        # )
 
         self.tail_conv=nn.Sequential(
             # nn.Conv2d(32,8,3,1,1),
@@ -185,11 +143,3 @@ class NET(nn.Module):
         return sr
 
 
-if __name__ == '__main__':
-    from torchsummary import summary
-    N=NET()
-    summary(N,[(1,64,64),(8,64,64)],device='cpu')
-
-if __name__ == '__main__':
-    net = NET().cuda()
-    stat(net, input_size=[(8, 64, 64), (1, 64, 64)])
