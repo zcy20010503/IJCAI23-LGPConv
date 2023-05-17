@@ -23,7 +23,7 @@ SEED = 1
 torch.manual_seed(SEED)
 torch.cuda.manual_seed(SEED)
 torch.cuda.manual_seed_all(SEED)
-# cudnn.benchmark = True  ###自动寻找最优算法
+# cudnn.benchmark = True 
 cudnn.deterministic = True
 cudnn.benchmark = False
 
@@ -63,7 +63,7 @@ if os.path.exists('train_logs'):  # for tensorboard: copy dir of train_logs  ## 
     shutil.rmtree('train_logs')  # ---> console (see tensorboard): tensorboard --logdir = dir of train_logs
 
 
-'''创建一个 tensorboard 对象'''
+
 writer = SummaryWriter('./train_logs')    ## Tensorboard_show: case 2
 
 
@@ -169,15 +169,13 @@ def train(training_data_loader, validate_data_loader,start_epoch=0):
 ###################################################################
 ###################################################################
 if __name__ == "__main__":
-    train_set = Dataset_Pro('/Data2/DataSet/pansharpening/training_data/train_wv3.h5')  # creat data for training
-    # train_set = Dataset_Pro('/Data/DataSet/pansharpening/training_data/t')
+    train_set = Dataset_Pro('train.h5')  # creat data for training
+   
     training_data_loader = DataLoader(dataset=train_set, num_workers=0, batch_size=batch_size, shuffle=True,
                                       pin_memory=True, drop_last=True)  # put training data to DataLoader for batches
 
-    validate_set = Dataset_Pro('/Data2/DataSet/pansharpening/training_data/valid_wv3.h5')  # creat data for validation
+    validate_set = Dataset_Pro('vaild.h5')  # creat data for validation
     validate_data_loader = DataLoader(dataset=validate_set, num_workers=0, batch_size=batch_size, shuffle=False,
                                       pin_memory=True, drop_last=True)  # put training data to DataLoader for batches
     torch.cuda.empty_cache()
-    # file_path = "/home/office-401-2/Desktop/Machine Learning/Ran Ran/02-DRPNN-Pytorch/test_data/TestData_wv3.h5"
-    # testms, testpan, testlms,testgt,testgt1= load_set(file_path)
     train(training_data_loader, validate_data_loader)  # call train function
