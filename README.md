@@ -1,6 +1,6 @@
 # LGPConv-Learnable-Gaussian-Perturbation-Convolution-for-Lightweight-Pansharpening
 * This is code for paper: " LGPConv-Learnable-Gaussian-Perturbation-Convolution-for-Lightweight-Pansharpening", accepted by IJCAI 2023
-* Homepage for authors: Prof. Liang-Jian Deng (https://liangjiandeng.github.io/)
+* Homepage for the corresponding author: Prof. Liang-Jian Deng (https://liangjiandeng.github.io/)
 
 ## Training Platform
 * Python 3.8 (Recommend to use Anaconda)
